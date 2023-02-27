@@ -18,10 +18,10 @@ import java.util.logging.Logger;
  * @author dekany.m.balazs
  */
 public class Dolgozok extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Dolgozok
-     */
+    
+    private static String [] sor;
+    private static int legidosebb, osszkor;
+    private static List<String> sorok;
     public Dolgozok() {
         initComponents();
     }
@@ -198,21 +198,38 @@ public class Dolgozok extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
+        jLabel3.setText("legidősebb: "+legidosebb);
+        jLabel4.setText("összes kor: "+osszkor);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    private static void beolvasas() throws IOException{
+    public static void beolvasas() throws IOException{
         String fn = "emberek.txt";
         Path path = Paths.get(fn);
-        List<String> sorok = Files.readAllLines(path);
+        sorok = Files.readAllLines(path);
         String fejlec = sorok.get(0);
         sorok.remove(0);
-        System.out.println("sorok száma: " + sorok.size());
+        
+        
+        for (String adat : sorok) {
+            sor = adat.split(";");
+            String nev = sor[0];
+            int kor = Integer.parseInt(sor[1]);
+            String nem = sor[2];
+            osszkor+=kor;
+            if(kor>legidosebb){
+                legidosebb=kor;
+            }
+            
+        }
+        
+        
     }
+    
+    
     
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -223,7 +240,8 @@ public class Dolgozok extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Dolgozok.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
+            }
+            
         });
     }
 
