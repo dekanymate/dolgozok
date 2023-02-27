@@ -4,6 +4,15 @@
  */
 package com.mycompany.dolgozok;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 /**
  *
  * @author dekany.m.balazs
@@ -195,39 +204,26 @@ public class Dolgozok extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dolgozok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dolgozok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dolgozok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dolgozok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+    
+    private static void beolvasas() throws IOException{
+        String fn = "emberek.txt";
+        Path path = Paths.get(fn);
+        List<String> sorok = Files.readAllLines(path);
+        String fejlec = sorok.get(0);
+        sorok.remove(0);
+        System.out.println("sorok száma: " + sorok.size());
+    }
+    
+    public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Dolgozok().setVisible(true);
-            }
+                try {
+                    beolvasas();
+                } catch (IOException ex) {
+                    Logger.getLogger(Dolgozok.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
         });
     }
 
